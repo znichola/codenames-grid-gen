@@ -1,31 +1,47 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Elem, genGrid, Grid } from "./genGrid";
 
 export default function Home() {
-  const [grid, setGrid] = useState<Grid>(genGrid())
+  const [seed, setSeed] = useState<number | null>(null);
+  const [grid, setGrid] = useState<Grid>([]);
+
+  useEffect(() => {
+    setSeed(Math.floor(Math.random() * 10000));
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  useEffect(() => {
+    if (seed !== null) {
+      setGrid(genGrid(seed));
+    }
+  }, [seed]); // Runs every time seed changes
+
+  // Generate new seed when button is clicked
+  const genSeed = () => {
+    setSeed(Math.floor(Math.random() * 10000));
+  };
 
   // Map color classes based on element type
   const getColorClass = (elem: Elem): string => {
     switch (elem) {
       case "R":
-        return "bg-red-500 hover:bg-red-600"
+        return "bg-red-500 hover:bg-red-600";
       case "B":
-        return "bg-blue-500 hover:bg-blue-600"
+        return "bg-blue-500 hover:bg-blue-600";
       case "Y":
-        return "bg-yellow-400 hover:bg-yellow-500"
+        return "bg-yellow-400 hover:bg-yellow-500";
       case "X":
-        return "bg-black hover:bg-gray-800"
+        return "bg-black hover:bg-gray-800";
       default:
-        return ""
+        return "";
     }
-  }
+  };
 
   // Map text color based on element type
   const getTextClass = (elem: Elem): string => {
-    return elem === "X" || elem === "B" ? "text-white" : "text-gray-800"
-  }
+    return elem === "X" || elem === "B" ? "text-white" : "text-gray-800";
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
@@ -56,11 +72,11 @@ export default function Home() {
       </div>
 
       <button
-        onClick={() => setGrid(genGrid())}
+        onClick={genSeed} // Fixed onClick handler
         className="px-4 py-2 mt-8 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
         Generate New Grid
       </button>
     </div>
-  )
+  );
 }

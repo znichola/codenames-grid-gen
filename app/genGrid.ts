@@ -9,14 +9,14 @@ type Grid = Line[]
 // total = 25
 
 
-function shuffle(input : string) : string {
+function shuffle(input : string, seed: number) : string {
 
     function halfShuffle(input : string) : string {
         var left = '';
         var middle = '';
         var right = '';
         for (var i = 0; i < input.length; i++) {
-            var modRes = i % 5;
+            var modRes = i % 3;
             if (modRes == 0) {
                 left = left + input[i]; 
             } else if (modRes == 1) {
@@ -30,13 +30,13 @@ function shuffle(input : string) : string {
     }
 
     var ret = input;
-    for (var i = 0; i < 10000; i++) {
+    for (var i = 0; i < 10 + (seed % 10); i++) {
         ret = halfShuffle(ret);
     }
     return ret;
 }
 
-function genGrid() : Grid {
+function genGrid(seed: number) : Grid {
     var allCards : string = '';
     // add all red cards
     allCards = allCards + 'R'.repeat(8);
@@ -44,10 +44,11 @@ function genGrid() : Grid {
     allCards = allCards + 'Y'.repeat(7);
     allCards = allCards + 'X'.repeat(1);
 
+    console.log("SEED:", seed);
     console.log("MY LIST:", allCards);
     console.log("My ARRAY:", Array.from(allCards));
 
-    const myArray: Line = <Line> Array.from(shuffle(allCards));
+    const myArray: Line = <Line> Array.from(shuffle(allCards, seed));
 
     console.log("MY SLICE:", myArray.slice(0, 5));
 
