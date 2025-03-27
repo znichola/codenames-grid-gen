@@ -28,6 +28,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <footer className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-md">
+        <div className="container flex items-center justify-center mx-auto">
+          <a
+            href="https://github.com/znichola/codenames-grid-gen"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-700 hover:text-indigo-600 transition-colors"
+          >
+            {/* <Github size={20} /> */}
+            <span>View source on GitHub</span>
+          </a>
+        </div>
+      </footer>
       </body>
     </html>
   );
