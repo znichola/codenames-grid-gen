@@ -44,27 +44,26 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-gray-100">
       <h1 className="mb-8 text-3xl font-bold text-gray-800">Codenames Grid</h1>
 
-      <div className="grid gap-4 p-6 bg-white rounded-lg shadow-lg">
+      <div className="grid gap-2 sm:gap-4 p-3 sm:p-6 bg-white rounded-lg shadow-lg w-full max-w-md mx-auto">
         {grid.map((line, rowIndex) => (
-          <div key={rowIndex} className="flex gap-4">
+          <div key={rowIndex} className="flex gap-2 sm:gap-4">
             {line.map((elem, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`
                   ${getColorClass(elem)} 
                   ${getTextClass(elem)}
-                  w-20 h-20 
+                  w-full aspect-square
                   flex items-center justify-center 
                   rounded-md shadow-md 
-                  font-bold text-xl
+                  font-bold text-base sm:text-xl
                   transition-colors duration-200
                   cursor-pointer
                 `}
               >
-                
               </div>
             ))}
           </div>
@@ -72,11 +71,11 @@ export default function Home() {
       </div>
 
       <button
-        onClick={genSeed} // Fixed onClick handler
-        className="px-4 py-2 mt-8 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        onClick={genSeed}
+        className="px-3 py-2 sm:px-4 sm:py-2 mt-6 sm:mt-8 text-sm sm:text-base font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
         Generate New Grid
       </button>
     </div>
-  );
+  )
 }
