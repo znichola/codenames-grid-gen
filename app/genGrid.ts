@@ -47,7 +47,7 @@ function genGrid() : Grid {
     console.log("MY LIST:", allCards);
     console.log("My ARRAY:", Array.from(allCards));
 
-    const myArray: Line = Array.from(shuffle(allCards));
+    const myArray: Line = <Line> Array.from(shuffle(allCards));
 
     console.log("MY SLICE:", myArray.slice(0, 5));
 
