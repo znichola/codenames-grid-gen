@@ -6,15 +6,14 @@ import { default as DefaultGrid } from "./gridDisplay";
 import { default as PopArtGrid } from "./gridPopArt";
 import { default as StarWarsGrid } from "./gridStarWars";
 import { default as GuanGrid } from "./gridGuan";
-
-
-type GridStyles = "Display" | "PopArt" | "Guan" | "StarWars";
+import { default as GangsterGrid } from "./gridGangster";
+import { default as CottageGrid } from "./gridCottage";
 
 export default function Home() {
   const [seed, setSeed] = useState<number | null>(null);
   const [dimention, setGridDimention] = useState(5);
   const [grid, setGrid] = useState<Grid>([]);
-  const [gridStyle, setGridStyle] = useState<GridStyles>("Display");
+  const [gridStyle, setGridStyle] = useState(0);
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 10000));
@@ -31,14 +30,23 @@ export default function Home() {
     setSeed(Math.floor(Math.random() * 10000));
   };
 
+  const gridStyles = [
+    CottageGrid,
+    GangsterGrid,
+    PopArtGrid,
+  ];
+
   const toggleGridStyle = () => {
-    const styles: GridStyles[] = ["Display", "PopArt", "StarWars", "Guan"];
-    const nextStyle = styles[(styles.indexOf(gridStyle) + 1) % styles.length];
-    setGridStyle(nextStyle);
+    
+    if (gridStyle + 1 > gridStyles.length)
+      setGridStyle(0);
+    else
+      setGridStyle(gridStyle + 1);
   };
+  
+  const GridComponent = gridStyles[gridStyle] || DefaultGrid;
 
-  const GridComponent = gridStyle === "PopArt" ? PopArtGrid : gridStyle === "StarWars" ? StarWarsGrid : gridStyle === "Guan" ? GuanGrid : DefaultGrid;
-
+  
   return (
     <div>
       <GridComponent

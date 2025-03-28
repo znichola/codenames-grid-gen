@@ -1,91 +1,130 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import type { Elem, Grid } from "./genGrid"
 
-export default function GridDisplay({ grid, onClick }: { grid: Grid; onClick: () => void }) {
-  // Map color classes based on element type with pop art vibrant colors
+export default function GridDisplay({
+  grid,
+  onClick,
+  setGridDimention,
+  toggleStyle,
+}: {
+  grid: Grid
+  onClick: () => void
+  setGridDimention: (n: number) => void
+  toggleStyle: () => void
+}) {
+  const [animate, setAnimate] = useState(false)
+
+  // Pop art inspired color palette
   const getColorClass = (elem: Elem): string => {
     switch (elem) {
       case "R":
-        return "bg-rose-500 hover:bg-rose-600"
+        return "bg-gradient-to-br from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700"
       case "B":
-        return "bg-cyan-500 hover:bg-cyan-600"
+        return "bg-gradient-to-br from-cyan-400 to-blue-600 hover:from-cyan-500 hover:to-blue-700"
       case "Y":
-        return "bg-amber-300 hover:bg-amber-400"
+        return "bg-gradient-to-br from-yellow-300 to-amber-500 hover:from-yellow-400 hover:to-amber-600"
       case "X":
-        return "bg-purple-900 hover:bg-purple-950"
+        return "bg-gradient-to-br from-gray-900 to-black hover:from-black hover:to-gray-800"
       default:
         return ""
     }
   }
 
-  // Map text color based on element type
   const getTextClass = (elem: Elem): string => {
     return elem === "X" || elem === "B" ? "text-white" : "text-gray-900"
   }
 
-  // Pop art pattern for each cell type
-  const getPattern = (elem: Elem, rowIndex: number, colIndex: number): string => {
-    // Create different patterns based on position and element type
-    const isEven = (rowIndex + colIndex) % 2 === 0
+  const getPatternClass = (elem: Elem, index: number): string => {
+    // Create different patterns based on element type and position
+    const patterns = [
+      "after:absolute after:inset-0 after:bg-[radial-gradient(circle,_transparent_30%,_rgba(255,255,255,0.2)_30%)] after:bg-[length:8px_8px] after:opacity-40",
+      "after:absolute after:inset-0 after:bg-[linear-gradient(45deg,_transparent_46%,_rgba(255,255,255,0.3)_46%,_rgba(255,255,255,0.3)_54%,_transparent_54%)] after:bg-[length:8px_8px] after:opacity-40",
+      "after:absolute after:inset-0 after:bg-[radial-gradient(circle,_rgba(255,255,255,0.3)_20%,_transparent_20%)] after:bg-[length:6px_6px] after:opacity-40",
+      "after:absolute after:inset-0 after:bg-[linear-gradient(to_right,_transparent_46%,_rgba(255,255,255,0.3)_46%,_rgba(255,255,255,0.3)_54%,_transparent_54%)] after:bg-[length:8px_8px] after:opacity-40",
+    ]
 
-    switch (elem) {
-      case "R":
-        return isEven ? "bg-[radial-gradient(circle,_transparent_20%,_#f43f5e_20%,_#f43f5e_80%,_transparent_80%)]" : ""
-      case "B":
-        return isEven ? "bg-[linear-gradient(45deg,_transparent_45%,_#0ea5e9_45%,_#0ea5e9_55%,_transparent_55%)]" : ""
-      case "Y":
-        return isEven ? "bg-[repeating-linear-gradient(45deg,_#fcd34d,_#fcd34d_5px,_#fbbf24_5px,_#fbbf24_10px)]" : ""
-      case "X":
-        return "bg-[radial-gradient(circle,_#581c87_30%,_#4c1d95_70%)]"
-      default:
-        return ""
-    }
+    return patterns[index % patterns.length]
   }
 
+  // Available grid dimensions
+  const dimensions = [4, 5, 6, 7, 8]
+
+  // Trigger animation when grid changes
+  useEffect(() => {
+    setAnimate(true)
+    const timer = setTimeout(() => setAnimate(false), 500)
+    return () => clearTimeout(timer)
+  }, [grid])
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-gradient-to-br from-pink-200 via-purple-200 to-cyan-200">
-      <h1 className="mb-8 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-violet-600 drop-shadow-sm">
-        Codenames Grid
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-gradient-to-br from-purple-100 via-pink-50 to-yellow-100">
+      <h1 className="mb-8 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-yellow-500 drop-shadow-sm">
+        POP CODENAMES
       </h1>
 
-      <div className="grid gap-3 sm:gap-5 p-4 sm:p-8 bg-white rounded-xl shadow-2xl w-full max-w-md mx-auto border-4 border-black">
+      <div
+        className={`grid gap-3 sm:gap-4 p-4 sm:p-6 bg-white rounded-xl shadow-[0_10px_0_0_#000] border-4 border-black w-full max-w-md mx-auto ${animate ? "animate-wiggle" : ""}`}
+      >
         {grid.map((line, rowIndex) => (
-          <div key={rowIndex} className="flex gap-3 sm:gap-5">
+          <div key={rowIndex} className="flex gap-3 sm:gap-4">
             {line.map((elem, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 className={`
-                                    ${getColorClass(elem)} 
-                                    ${getTextClass(elem)}
-                                    ${getPattern(elem, rowIndex, colIndex)}
-                                    w-full aspect-square
-                                    flex items-center justify-center 
-                                    rounded-lg
-                                    border-4 border-black
-                                    font-extrabold text-base sm:text-xl
-                                    transition-all duration-200
-                                    cursor-pointer
-                                    transform hover:scale-105
-                                    shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
-                                    hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
-                                `}
+                  ${getColorClass(elem)} 
+                  ${getTextClass(elem)}
+                  ${getPatternClass(elem, rowIndex + colIndex)}
+                  w-full aspect-square
+                  flex items-center justify-center 
+                  rounded-lg border-2 border-black
+                  font-bold text-base sm:text-xl
+                  transition-all duration-300
+                  cursor-pointer
+                  relative overflow-hidden
+                  shadow-[4px_4px_0_0_rgba(0,0,0,0.8)]
+                  hover:shadow-[2px_2px_0_0_rgba(0,0,0,0.8)]
+                  hover:translate-x-[2px] hover:translate-y-[2px]
+                  active:translate-x-[4px] active:translate-y-[4px]
+                  active:shadow-none
+                `}
               ></div>
             ))}
           </div>
         ))}
       </div>
 
-      <button
-        onClick={onClick}
-        className="px-5 py-3 mt-8 text-lg font-extrabold text-white bg-gradient-to-r from-pink-500 to-violet-500 rounded-xl 
-                border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
-                hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] 
-                hover:translate-y-1 hover:translate-x-1
-                transition-all duration-200 transform"
-      >
-        Generate New Grid
-      </button>
+      <div className="flex flex-col sm:flex-row gap-3 mt-8">
+        <button
+          onClick={onClick}
+          className="px-5 py-3 text-base font-extrabold text-white bg-gradient-to-r from-pink-500 to-orange-500 rounded-lg border-2 border-black shadow-[4px_4px_0_0_#000] hover:shadow-[2px_2px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all duration-150 focus:outline-none"
+        >
+          NEW GRID!
+        </button>
+
+        <button
+          onClick={toggleStyle}
+          className="px-5 py-3 text-base font-extrabold text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg border-2 border-black shadow-[4px_4px_0_0_#000] hover:shadow-[2px_2px_0_0_#000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all duration-150 focus:outline-none"
+        >
+          SWITCH STYLE!
+        </button>
+      </div>
+
+      <div className="mt-6">
+        <div className="text-base font-bold text-center text-gray-800 mb-2">GRID SIZE:</div>
+        <div className="flex gap-2">
+          {dimensions.map((dim) => (
+            <button
+              key={dim}
+              onClick={() => setGridDimention(dim)}
+              className="w-10 h-10 flex items-center justify-center text-base font-bold text-gray-800 bg-white rounded-full border-2 border-black shadow-[2px_2px_0_0_#000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-150 focus:outline-none"
+            >
+              {dim}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
