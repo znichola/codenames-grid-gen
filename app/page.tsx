@@ -9,6 +9,12 @@ import { default as GuanGrid } from "./gridGuan";
 import { default as GangsterGrid } from "./gridGangster";
 import { default as CottageGrid } from "./gridCottage";
 
+const gridStyles = [
+  CottageGrid,
+  GangsterGrid,
+  PopArtGrid,
+];
+
 export default function Home() {
   const [seed, setSeed] = useState<number | null>(null);
   const [dimention, setGridDimention] = useState(5);
@@ -17,6 +23,7 @@ export default function Home() {
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 10000));
+    setGridStyle(Math.floor(Math.random() * 10000) % gridStyles.length);
   }, []); // Empty dependency array ensures this runs only once on mount
 
   useEffect(() => {
@@ -30,23 +37,19 @@ export default function Home() {
     setSeed(Math.floor(Math.random() * 10000));
   };
 
-  const gridStyles = [
-    CottageGrid,
-    GangsterGrid,
-    PopArtGrid,
-  ];
-
   const toggleGridStyle = () => {
-    
+
     if (gridStyle + 1 > gridStyles.length)
       setGridStyle(0);
     else
       setGridStyle(gridStyle + 1);
   };
-  
+
   const GridComponent = gridStyles[gridStyle] || DefaultGrid;
 
-  
+  if (seed == null) 
+    return (<div></div>);
+
   return (
     <div>
       <GridComponent
