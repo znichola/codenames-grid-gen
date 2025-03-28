@@ -28,7 +28,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <footer className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-md">
+        <footer className="right-0 p-4 bg-white shadow-md">
         <div className="container flex items-center justify-center mx-auto">
           <a
             href="https://github.com/znichola/codenames-grid-gen"
