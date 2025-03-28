@@ -33,7 +33,7 @@ export default function GridDisplay({
     const dimensions = [4, 5, 6, 7, 8]
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-amber-50 bg-[url('/placeholder.svg?height=100&width=100')] bg-repeat">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-amber-50 bg-repeat">
             <div className="w-full max-w-2xl mx-auto text-center mb-8">
                 <h1 className="text-3xl font-serif italic text-rose-800 mb-2">Codenames Grid</h1>
                 <div className="flex justify-center">

@@ -41,7 +41,7 @@ export default function GridDisplay({ grid, onClick }: { grid: Grid; onClick: ()
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-[#0a0e17] bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center bg-blend-overlay">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-[#0a0e17] bg-cover bg-center bg-blend-overlay">
       <h1 className="mb-8 text-3xl font-bold text-yellow-300 tracking-wider uppercase">Galactic Intelligence Grid</h1>
 
       <div className="grid gap-2 sm:gap-4 p-3 sm:p-6 bg-gray-900/80 rounded-lg border border-gray-700 shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-sm w-full max-w-md mx-auto">

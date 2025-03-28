@@ -33,7 +33,7 @@ export default function GridDisplay({
   const dimensions = [4, 5, 6, 7, 8]
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-black bg-opacity-90 bg-[url('/placeholder.svg?height=800&width=800')] bg-blend-overlay bg-center">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-black bg-opacity-90 bg-blend-overlay bg-center">
       <h1 className="mb-6 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-purple-600 drop-shadow-lg">
         STREET CODES
       </h1>
