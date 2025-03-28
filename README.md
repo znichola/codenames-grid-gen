@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Codenames Grid Genenrator
+
+This is as weekend project done in collaboration with Lucas. Generate your codenames grid, vary the size and switch up the styles for a customized experience.
 
 ## Getting Started
 

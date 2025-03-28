@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,19 +30,25 @@ export default function RootLayout({
       >
         {children}
         <footer className="right-0 p-4 bg-white shadow-md">
-        <div className="container flex items-center justify-center mx-auto">
-          <a
-            href="https://github.com/znichola/codenames-grid-gen"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gray-700 hover:text-indigo-600 transition-colors"
-          >
-            {/* <Github size={20} /> */}
-            <span>View source on GitHub</span>
-            
-          </a>
-        </div>
-      </footer>
+          <div className="container flex items-center justify-center mx-auto gap-3">
+            <a
+              href="https://github.com/znichola/codenames-grid-gen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-gray-700 hover:text-indigo-600 transition-colors"
+            >
+              {/* <Github size={20} /> */}
+              <span>View source on GitHub</span>
+
+            </a>
+            <Link
+              href="/about"
+              className="text-gray-700 hover:text-indigo-600 transition-colors"
+            >
+              About
+            </Link>
+          </div>
+        </footer>
       </body>
     </html>
   );
