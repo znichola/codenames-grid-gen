@@ -43,6 +43,20 @@ function shuffle(input: string, seed: number): string {
     return ret;
 }
 
+// A B C D E
+// 0 1 2 3 4
+function shuffle2(input: string, seed: number) : string {
+    var a = Array.from(input);
+
+    for (var i = a.length - 1; i >= 0; i--) {
+        const j = Math.round((Math.random() * 10000) % (i + 1));
+        const last = a[i];
+        a[i] = a[j];
+        a[j] = last;
+    }
+    return a.join("");
+}
+
 function repartition(count: number): Repartition {
     const r = Math.round(8 / 24 * count);
     const b = Math.round(8 / 24 * count);
@@ -76,7 +90,7 @@ function genGrid(gridSpec: GridSpec): Grid {
     // console.log("MY LIST:", allCards);
     // console.log("My ARRAY:", Array.from(allCards));
 
-    const myArray: Line = <Line>Array.from(shuffle(allCards, gridSpec.seed));
+    const myArray: Line = <Line>Array.from(shuffle2(allCards, gridSpec.seed));
 
     // console.log("MY SLICE:", myArray.slice(0, 5));
 

@@ -59,6 +59,17 @@ export default function GridDisplay({
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mt-6 sm:mt-8">
+        <div className="flex gap-3 justify-center items-center">Start player : <div
+          className={`
+                  ${getColorClass('B')}
+                  h-10 w-10 aspect-square
+                  flex items-center justify-center 
+                  rounded-md shadow-md 
+                  font-bold text-base sm:text-xl
+                  transition-colors duration-200
+                  cursor-pointer
+                `}
+        ></div></div>
         <button
           onClick={onClick}
           className="px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
