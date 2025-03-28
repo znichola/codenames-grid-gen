@@ -30,7 +30,10 @@ export default function GridDisplay({
   }
 
   // Available grid dimensions
-  const dimensions = [4, 5, 6, 7, 8]
+  const dimensions = [4, 5, 6, 7, 8];
+
+  const foo = grid.flat(1);
+  const startPlayer = foo.filter(e => e == 'B').length > foo.filter(e => e == 'R').length ? 'B' : 'R';
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 pb-16 bg-gray-100">
@@ -61,7 +64,7 @@ export default function GridDisplay({
       <div className="flex flex-col sm:flex-row gap-3 mt-6 sm:mt-8">
         <div className="flex gap-3 justify-center items-center">Start player : <div
           className={`
-                  ${getColorClass('B')}
+                  ${getColorClass(startPlayer)}
                   h-10 w-10 aspect-square
                   flex items-center justify-center 
                   rounded-md shadow-md 
