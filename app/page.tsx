@@ -12,6 +12,7 @@ type GridStyles = "Display" | "PopArt" | "Guan" | "StarWars";
 
 export default function Home() {
   const [seed, setSeed] = useState<number | null>(null);
+  const [dimention, setGridDimention] = useState(5);
   const [grid, setGrid] = useState<Grid>([]);
   const [gridStyle, setGridStyle] = useState<GridStyles>("Display");
 
@@ -21,9 +22,9 @@ export default function Home() {
 
   useEffect(() => {
     if (seed !== null) {
-      setGrid(genGrid({dimention: 6, seed: seed}));
+      setGrid(genGrid({ dimention, seed }));
     }
-  }, [seed]); // Runs every time seed changes
+  }, [seed, dimention]); // Runs every time seed changes
 
   // Generate new seed when button is clicked
   const genSeed = () => {
@@ -31,18 +32,21 @@ export default function Home() {
   };
 
   const toggleGridStyle = () => {
-    const styles : GridStyles[] = ["Display", "PopArt", "StarWars", "Guan"];
+    const styles: GridStyles[] = ["Display", "PopArt", "StarWars", "Guan"];
     const nextStyle = styles[(styles.indexOf(gridStyle) + 1) % styles.length];
     setGridStyle(nextStyle);
   };
 
-  const GridComponent = gridStyle === "PopArt" ? PopArtGrid : gridStyle === "StarWars" ? StarWarsGrid : DefaultGrid;
+  const GridComponent = gridStyle === "PopArt" ? PopArtGrid : gridStyle === "StarWars" ? StarWarsGrid : gridStyle === "Guan" ? GuanGrid : DefaultGrid;
 
   return (
     <div>
-      <button onClick={genSeed}>Generate New Grid</button>
-      <button onClick={toggleGridStyle}>Switch Grid Style</button>
-      <GridComponent grid={grid} onClick={genSeed} />
+      <GridComponent
+        grid={grid}
+        onClick={genSeed}
+        setGridDimention={setGridDimention}
+        toggleStyle={toggleGridStyle}
+      />
     </div>
   );
 }
