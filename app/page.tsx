@@ -5,7 +5,7 @@ import { Elem, genGrid, Grid } from "./genGrid";
 import { default as DefaultGrid } from "./gridDisplay";
 import { default as PopArtGrid } from "./gridPopArt";
 import { default as StarWarsGrid } from "./gridStarWars";
-import { default as StarGuan } from "./gridGuan";
+import { default as GuanGrid } from "./gridGuan";
 
 
 type GridStyles = "Display" | "PopArt" | "Guan" | "StarWars";
@@ -21,7 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     if (seed !== null) {
-      setGrid(genGrid(seed));
+      setGrid(genGrid({dimention: 6, seed: seed}));
     }
   }, [seed]); // Runs every time seed changes
 
